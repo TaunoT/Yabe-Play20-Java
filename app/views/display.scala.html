@@ -1,0 +1,44 @@
+@(post: models.Post, mode: String ="full")
+
+<div class="post @{if(mode == "teaser") mode else ""}">
+  <h2 class="post-title">
+    <a href="#">@post.title</a>
+  </h2>
+  <div class="post-metadata">
+    <span class="post-author"> by @User.findByEmail(post.author.email).fullname</span>
+    <span class="post-date">@post.postedAt.format("dd MMM yy")</span>
+    @if(mode=="full"){
+      <span class="post-comments">
+        &nbsp;|&nbsp; 
+        @{val comments=Comment.findByPost(post.id); 
+          {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
+          {if(comments.size >0) {", " + " latest by " + User.findByEmail(comments.head.author.email).fullname }else ""}}
+      </span>
+    }    
+  </div>
+  @if(mode!="teaser"){
+    <div class="post-content">
+      <div class="about">Detail: </div>
+        @Html(post.content.replace("\n", "<br>"))
+    </div>
+  }
+</div>
+@if(mode=="full"){
+  <div class="comments">
+    <h3>
+       @{val comments=Comment.findByPost(post.id); 
+       {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} 
+       } 
+    </h3>
+    @{Comment.findByPost(post.id).map{comment =>
+      <div class="comment">
+        <div class="comment-metadata">
+          <span class="comment-author">by @User.findByEmail(comment.author.email).fullname,</span>
+          <span class="comment-date">
+            @comment.postedAt.format("dd MMM yy")
+          </span>
+        </div>
+      </div>
+    }}
+  </div>
+}

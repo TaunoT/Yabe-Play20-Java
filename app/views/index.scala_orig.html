@@ -1,0 +1,57 @@
+@(front: Option[Post], older: List[Post])
+
+@main("Yabe") {
+
+  @front.map { front =>
+    @display(front, mode = "home")
+    
+    @Option(older).filterNot
+  
+  <div class="post">
+    <h2 class="post-title">
+      <a href="#">@frontPost.title</a>
+    </h2>
+    <div class="post-metadata">
+      <span class="post-author">by @User.findByEmail(frontPost.author.email).fullname</span>
+      <span class="post-date">@frontPost.postedAt.format("MMM dd yyyy")</span>
+      <span class="post-comments">
+        &nbsp; |&nbsp;
+        @{val comments=Comment.findByPost(frontPost.id); 
+          {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
+          {if(comments.size >0) {", " + " latest by " + User.findByEmail(comments.head.author.email).fullname }else ""}}
+      </span>
+    </div>
+    <div class="post-content">
+      @Html(frontPost.content.replace("\n", "<br>"))
+    </div>
+  </div>
+  @if(!olderPosts.isEmpty){
+  <div class="older-posts">
+    <h3>Older posts <span class="from">from this blog</span></h3>
+      @for(oldPost <- olderPosts){
+        <div class="post">
+          <h2 class="post-title">
+            <a href="#">@oldPost.title</a>
+          </h2>
+          <div class="post-metadata">
+            <span class="post-author">
+              by @User.findByEmail(oldPost.author.email).fullname
+            </span>
+            <span class="post-date">
+              @oldPost.postedAt.format("MMM dd yy")
+            </span>
+            <div class="post-comments">
+              @{val comments=Comment.findByPost(oldPost.id); 
+              {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
+              {if(comments.size >0) {", " + " latest by " + User.findByEmail(comments.head.author.email).fullname }else ""}}              
+            </div>
+          </div>
+        </div>
+      }
+  </div>
+  }else {
+    <div class="empty">
+      There is currently nothing to read here
+    </div>
+  }
+}
