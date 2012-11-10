@@ -14,9 +14,12 @@ public class Application extends Controller {
     Post frontPost = Post.find.orderBy("postedAt").findList().get(0);
     List<Post> olderPosts = Post.find.orderBy("postedAt").findList().subList(1, 3);
     return ok(index.render(
-//    Post.find.all(), User.find.all()
     frontPost, olderPosts
     ));
   }
-  
+  public static Result show(Long id) {
+    Post post = Post.find.byId(id);
+    return ok(show.render(post));
+  }
 }
+

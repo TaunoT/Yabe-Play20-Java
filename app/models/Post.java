@@ -49,9 +49,4 @@ public class Post extends Model {
     post.save();
     return post;
   }
-
- 
-
-
-
 }

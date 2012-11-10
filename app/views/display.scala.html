@@ -2,7 +2,7 @@
 
 <div class="post @{if(mode == "teaser") mode else ""}">
   <h2 class="post-title">
-    <a href="#">@post.title</a>
+    <a href="@routes.Application.show(post.id)">@post.title</a>
   </h2>
   <div class="post-metadata">
     <span class="post-author"> by @User.findByEmail(post.author.email).fullname</span>
@@ -33,9 +33,9 @@
     @{Comment.findByPost(post.id).map{comment =>
       <div class="comment">
         <div class="comment-metadata">
-          <span class="comment-author">by @User.findByEmail(comment.author.email).fullname,</span>
+          <span class="comment-author">by {User.findByEmail(comment.author.email).fullname},</span>
           <span class="comment-date">
-            @comment.postedAt.format("dd MMM yy")
+            {comment.postedAt.format("dd MMM yy")}
           </span>
         </div>
       </div>
