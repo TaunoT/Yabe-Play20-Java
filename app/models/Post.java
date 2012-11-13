@@ -49,4 +49,17 @@ public class Post extends Model {
     post.save();
     return post;
   }
+
+  public Post previous() {
+    List<Post> result = Post.find.orderBy("postedAt desc").where().lt("postedAt", postedAt).findList();
+    if(result.size()>0)
+      return result.get(0);
+    return null;
+  }
+  public Post next() {
+    List<Post> result = Post.find.orderBy("postedAt asc").where().gt("postedAt", postedAt).findList();
+    if(result.size()>0)
+      return result.get(0);
+    return null;
+  }
 }

@@ -1,5 +1,21 @@
 @(post: Post)
 
 @main(post.title){
+    <ul id="pagination">
+      @if(!Option(post previous).isEmpty) {
+        <li id="previous">
+          <a href="@routes.Application.show(post.previous.id)">
+            @post.previous.title
+          </a>
+         <li>
+        }
+      @if(!Option(post next).isEmpty) {
+        <li id="next">
+          <a href="@routes.Application.show(post.next.id)">
+            @post.next.title
+          </a>
+         <li>
+        }
+    </ul>
     @display(post, mode = "full")
 }
