@@ -24,11 +24,11 @@ public class Comment extends Model {
 	public Post post;
 
   public static Model.Finder<Long, Comment> find = new Model.Finder(Long.class, Comment.class);
-	
 	public Comment(Post post, User author, String content) {
 		this.post = post;
 		this.author = author;
 		this.content = content;
+    this.postedAt = new Date();
 	}
 
   public static List<Comment> findByPost(Long postId) {

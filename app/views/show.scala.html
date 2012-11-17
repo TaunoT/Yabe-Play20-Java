@@ -1,4 +1,5 @@
-@(post: Post)
+@(post: Post, commentForm: Form[CommentForm])
+@import helper._
 
 @main(post.title){
     <ul id="pagination">
@@ -18,4 +19,25 @@
         }
     </ul>
     @display(post, mode = "full")
+    
+    @form(routes.Application.postComment(post.id)) {
+      <fieldset>
+        <legend>Post a comment</legend>
+          @inputText(
+            commentForm("fullname"),
+            '_label -> "Full Name:"
+          )
+          @inputText(
+            commentForm("email"),
+            '_label -> "Email:"
+          )
+          @textarea(
+            commentForm("content"),
+            '_label -> "Comment:"
+          )
+          <p>
+            <input type="submit" value="Submit your comment" />
+          </p>
+      </fieldset>
+    }
 }

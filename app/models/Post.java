@@ -28,8 +28,17 @@ public class Post extends Model {
 
   public static Model.Finder<Long, Post> find = new Model.Finder(Long.class, Post.class);
 
-	public Post addComment(User author, String content) {
-		Comment newComment = new Comment(this, author, content);
+	public Post addComment(String author_fullname, String author_email, String content) {
+    User commenter = User.findByEmail(author_email);
+    Comment newComment;
+    if(commenter != null){
+      newComment = new Comment(this, commenter, content);
+    }
+    else {
+      commenter = new User(author_email, "", author_fullname);
+      commenter.save();
+      newComment = new Comment(this, commenter, content);
+    }
 		newComment.save();
 		this.comments.add(newComment);
 		this.save();

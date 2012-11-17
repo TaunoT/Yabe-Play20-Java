@@ -3,8 +3,10 @@
 # ~~~~
 
 # Home page
+GET     /posts/$id<[0-9]+>                           controllers.Application.show(id : Long)
+POST    /posts/:id/comments                          controllers.Application.postComment(id: Long)
 GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /posts/$id<[0-9]+>                           controllers.Application.show(id : Long)
+
