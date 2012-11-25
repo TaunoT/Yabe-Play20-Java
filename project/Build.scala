@@ -9,10 +9,13 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       // Add your project dependencies here,
+      "com.octo.captcha" % "jcaptcha" % "1.0"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       // Add your own project settings here      
+      resolvers += "JHlabs1" at "http://mirrors.ibiblio.org/pub/mirrors/maven2/",
+      resolvers += "JHlabs2" at "http://maven.jahia.org/maven2/"
     )
 
 }
