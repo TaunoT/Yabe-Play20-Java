@@ -36,11 +36,11 @@ public class Application extends Controller {
 
   public static Result captcha(String randomID) {
     try{
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ImageCaptchaService service = Captcha.getService();
-    BufferedImage image = service.getImageChallengeForID(randomID);
-    ImageIO.write(image, "jpg", baos);
-    return ok(baos.toByteArray()).as("image/jpeg");
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ImageCaptchaService service = Captcha.getService();
+      BufferedImage image = service.getImageChallengeForID(randomID);
+      ImageIO.write(image, "jpg", baos);
+      return ok(baos.toByteArray()).as("image/jpeg");
     } catch(IOException e) {
       System.out.printf("Captcha Creation failed\n");
       return notFound();

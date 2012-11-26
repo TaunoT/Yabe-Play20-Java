@@ -1,5 +1,7 @@
 package controllers;
 
+import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class CommentForm {
   public String fullname;
@@ -9,7 +11,9 @@ public class CommentForm {
   public String code;
   
   public String validate()  {
-    if(!fullname.isEmpty() && !email.isEmpty() && !content.isEmpty())
+    ImageCaptchaService service = Captcha.getService ();
+
+    if(!fullname.isEmpty() && !email.isEmpty() && !content.isEmpty() && service.validateResponseForID (randomID, code))
       return null;
     else
       return "failed";
