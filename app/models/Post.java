@@ -25,6 +25,9 @@ public class Post extends Model {
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	public List<Comment> comments = new ArrayList<Comment>();
+  
+  @ManyToMany(cascade=CascadeType.PERSIST)
+  public Set<Tag> tags;
 
   public static Model.Finder<Long, Post> find = new Model.Finder(Long.class, Post.class);
 
@@ -46,9 +49,12 @@ public class Post extends Model {
 	}
 
   public Post(String title, User author, String content) {
+    this.comments = new ArrayList<Comment>();
+    this.tags = new TreeSet<Tag>();
     this.author = author;
     this.title = title;
     this.content = content;
+    this.postedAt = new Date();
   }
   
   public static Post create(Post post, String email, String content)
@@ -70,5 +76,13 @@ public class Post extends Model {
     if(result.size()>0)
       return result.get(0);
     return null;
+  }
+  
+  public Post tagItWith(String name) {
+    tags.add(Tag.findOrCreateByName(name));
+    return this;
+  }
+    
+  public static List<Post> findTaggedWith(String tag) {
   }
 }
