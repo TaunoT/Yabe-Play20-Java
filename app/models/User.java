@@ -6,6 +6,7 @@ import play.db.ebean.*;
 import com.avaje.ebean.*;
 
 @Entity
+@Table(name="users")
 public class User extends Model {
 
   @Id

@@ -6,11 +6,14 @@ import play.db.ebean.*;
 import com.avaje.ebean.*;
 
 @Entity
+@Table(name="tags")
 public class Tag extends Model implements Comparable<Tag> {
 
   @Id
-  public Long Id;
+  public Long id;
   public String name;
+  @ManyToMany(mappedBy = "tags")
+  public Set<Post> posts = new TreeSet<Post>();
 
   public static Model.Finder<Long, Tag> find = new Model.Finder(Long.class, Tag.class);
 
@@ -31,10 +34,16 @@ public class Tag extends Model implements Comparable<Tag> {
   }
 
   public static Tag findOrCreateByName(String name) {
-    Tag tag = Tag.find.where("name", name).findUnique();
+    Tag tag = Tag.find.where().eq("name", name).findUnique();
     if(tag == null) {
       tag = new Tag(name);
     }
     return tag;
+  }
+  
+  public static List<Map> getCloud() {
+    String sql = "select new map(t.name as tag, count(p.id) as pound) from Post p join p.tags as t group by t.name order by t.name";
+    com.avaje.ebean.Query<Map> sqlquery = Ebean.createQuery(Map.class, sql);
+    return sqlquery.findList();
   }
 }

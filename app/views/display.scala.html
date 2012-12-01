@@ -14,7 +14,17 @@
           {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
           {if(comments.size >0) {", " + " latest by " + User.findByEmail(comments.head.author.email).fullname }else ""}}
       </span>
-    }    
+    }
+    /*
+    else if(post.tags.isEmpty) {
+      <span class="post-tags">
+        -Tagged
+        @post.tags.map{ tag =>
+          <a href="@routes.Application.listTagged(tag.name)">tag</a>         
+        }
+      </span>
+   }
+   */
   </div>
   @if(mode!="teaser"){
     <div class="post-content">

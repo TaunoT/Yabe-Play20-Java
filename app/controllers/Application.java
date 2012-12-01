@@ -62,5 +62,10 @@ public class Application extends Controller {
       return show(postId); 
     }
   }
+
+  public static Result listTagged(String tag) {
+    List<Post> posts = Post.findTaggedWith(tag);
+    return ok(listTagged.render(posts, tag));
+  }
 }
 

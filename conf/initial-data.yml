@@ -2,26 +2,39 @@
 
 # Users
 users:
-    - !!models.User
+    - &user1 !!models.User
         email:      bob@gmail.com
         password:   secret
         fullname:   Bob
         isAdmin:    true
-    - !!models.User
+    - &user2 !!models.User
         email:      jeff@gmail.com
         password:   secret
         fullname:   Jeff
 
-# Posts
+# Tags
+tags:
 
+    - &tag1 !!models.Tag
+        name:  Play
+
+    - &tag2 !!models.Tag
+        name:  Architecture
+
+    - &tag3 !!models.Tag
+        name:  Test
+
+    - &tag4 !!models.Tag
+        name:  MVC
+
+# Posts
 posts:
 
-    - !!models.Post
-        id:         1
+    - &post1 !!models.Post
         title:      About the model layer
         postedAt:   2009-06-14
-        author: !!models.User
-                email: bob@gmail.com
+        author: *user1
+        tags:   *tag1 
         content:    >
                     The model has a central position in a Play! application. It is the domain-specific 
                     representation of the information on which the application operates.
@@ -33,21 +46,17 @@ posts:
                     is controlled and used here, even though the technical details of storing it are 
                     delegated to the infrastructure. This layer is the heart of business software.            
         
-    - !!models.Post
-        id:         2
+    - &post2 !!models.Post
         title:      Just a test of YABE
         postedAt:   2009-03-25
-        author: !!models.User
-                email: bob@gmail.com
+        author: *user1
         content:    >
                     Well, it's just a test.
 
-    - !!models.Post
-        id:         3
+    - &post3 !!models.Post
         title:      The MVC application
         postedAt:   2009-06-06
-        author: !!models.User
-                email: jeff@gmail.com
+        author: *user2
         content:    >
                     A Play! application follows the MVC architectural pattern as applied to the 
                     architecture of the Web.
@@ -58,32 +67,26 @@ posts:
 
 
 # Comments
-
 comments:
     
-    - !!models.Comment
-        author: !!models.User
-                email:  bob@gmail.com
+    - &comment1 !!models.Comment
+        author: *user1
         content:    >
                     You are right !
         postedAt:   2009-06-14
-        post: !!models.Post
-              id:   1
+        post: *post1
       
-    - !!models.Comment
-        author: !!models.User
-                email:  jeff@gmail.com
+    - &comment2 !!models.Comment
+        author: *user2
         content:    >
                     I knew that ....
         postedAt:   2009-06-15
-        post: !!models.Post
-              id:   1
+        post: *post1
 
-    - !!models.Comment
-        author: !!models.User
-                email:  bob@gmail.com
+    - &comment3 !!models.Comment
+        author: *user1
         content:    >
                     This post is useless ?
         postedAt:   2009-04-05
-        post: !!models.Post
-              id:   2
+        post: *post2
+

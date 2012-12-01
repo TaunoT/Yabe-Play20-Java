@@ -14,8 +14,12 @@ public class Global extends GlobalSettings {
 		public static void insert(Application app) {
 			if(Ebean.find(User.class).findRowCount() == 0) {
 				Map<String, List<Object>> all = (Map<String, List<Object>>)Yaml.load("initial-data.yml");
+        System.out.printf("\n\t****YAML read is DONE***\n");
 				Ebean.save(all.get("users"));
 				Ebean.save(all.get("posts"));
+        for(Object post: all.get("posts")) {
+          Ebean.saveManyToManyAssociations(post, "tags");
+        }
 				Ebean.save(all.get("comments"));
 			}
 		}
