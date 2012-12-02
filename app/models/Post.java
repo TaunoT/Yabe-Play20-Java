@@ -26,9 +26,8 @@ public class Post extends Model {
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	public List<Comment> comments = new ArrayList<Comment>();
   
-  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   public Set<Tag> tags = new TreeSet<Tag>();
-  //public List<Tag> tags = new ArrayList<Tag>();
 
   public static Model.Finder<Long, Post> find = new Model.Finder(Long.class, Post.class);
 
@@ -50,9 +49,8 @@ public class Post extends Model {
 	}
 
   public Post(String title, User author, String content) {
-    this.comments = new ArrayList<Comment>();
-    this.tags = new TreeSet<Tag>();
-    //this.tags = new ArrayList<Tag>();
+    //this.comments = new ArrayList<Comment>();
+    //this.tags = new TreeSet<Tag>();
     this.author = author;
     this.title = title;
     this.content = content;

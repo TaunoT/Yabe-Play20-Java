@@ -6,25 +6,27 @@
   </h2>
   <div class="post-metadata">
     <span class="post-author"> by @User.findByEmail(post.author.email).fullname</span>
-    <span class="post-date">@post.postedAt.format("dd MMM yy")</span>
-    @if(mode=="full"){
+    <span class="post-date"> @post.postedAt.format("dd MMM yy") </span>
+    @if( mode != "full" ) {
       <span class="post-comments">
         &nbsp;|&nbsp; 
-        @{val comments=Comment.findByPost(post.id); 
+        @{
+          val comments=Comment.findByPost(post.id); 
           {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
-          {if(comments.size >0) {", " + " latest by " + User.findByEmail(comments.head.author.email).fullname }else ""}}
-      </span>
-    }
-    /*
-    else if(post.tags.isEmpty) {
-      <span class="post-tags">
-        -Tagged
-        @post.tags.map{ tag =>
-          <a href="@routes.Application.listTagged(tag.name)">tag</a>         
+          {if(comments.size >0) {", " + " latest by " + 
+            User.findByEmail(comments.head.author.email).fullname }else ""}
         }
       </span>
-   }
-   */
+    } else {
+      <span class="post-tags">
+        @if(!post.tags.isEmpty) {
+          -Tagged
+          @post.tags.map{ tag =>
+            <a href="@routes.Application.listTagged(tag.name)">@tag</a>         
+          }
+        }
+      </span>
+   }   
   </div>
   @if(mode!="teaser"){
     <div class="post-content">

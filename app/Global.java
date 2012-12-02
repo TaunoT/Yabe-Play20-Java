@@ -13,14 +13,35 @@ public class Global extends GlobalSettings {
 	static class InitialData {
 		public static void insert(Application app) {
 			if(Ebean.find(User.class).findRowCount() == 0) {
+        Logger.debug("Read the initial-data.yml file.");
+
 				Map<String, List<Object>> all = (Map<String, List<Object>>)Yaml.load("initial-data.yml");
-        System.out.printf("\n\t****YAML read is DONE***\n");
-				Ebean.save(all.get("users"));
-				Ebean.save(all.get("posts"));
-        for(Object post: all.get("posts")) {
-          Ebean.saveManyToManyAssociations(post, "tags");
+
+        if(Ebean.find(User.class).findRowCount() == 0) {
+          Logger.debug("Loading users from initial-data.yml.");
+  				Ebean.save(all.get("users"));
         }
-				Ebean.save(all.get("comments"));
+
+        if(Ebean.find(Tag.class).findRowCount() == 0) {
+          Logger.debug("Loading tags from initial-data.yml.");
+  				Ebean.save(all.get("tags"));
+        }
+
+        if(Ebean.find(Post.class).findRowCount() == 0) {
+          Logger.debug("Loading posts from initial-data.yml.");
+				  Ebean.save(all.get("posts"));
+          
+          for(Object post: all.get("posts")) {
+            Logger.debug("Inserting posts-tags from initial-data.yml.");
+            Ebean.saveManyToManyAssociations(post, "tags");
+          }
+        }
+
+
+        if(Ebean.find(Comment.class).findRowCount() == 0) {
+          Logger.debug("Loading comments from initial-data.yml.");
+				  Ebean.save(all.get("comments"));
+        }
 			}
 		}
 	}

@@ -34,7 +34,11 @@ posts:
         title:      About the model layer
         postedAt:   2009-06-14
         author: *user1
-        tags:   *tag1 
+        tags:  
+             - *tag1
+             - *tag2
+             - *tag3
+ 
         content:    >
                     The model has a central position in a Play! application. It is the domain-specific 
                     representation of the information on which the application operates.

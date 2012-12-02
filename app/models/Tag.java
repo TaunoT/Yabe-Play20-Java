@@ -11,7 +11,10 @@ public class Tag extends Model implements Comparable<Tag> {
 
   @Id
   public Long id;
+  
+  @Basic(fetch = FetchType.EAGER)
   public String name;
+
   @ManyToMany(mappedBy = "tags")
   public Set<Post> posts = new TreeSet<Post>();
 
