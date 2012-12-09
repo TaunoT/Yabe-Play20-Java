@@ -30,6 +30,13 @@ public class Application extends Controller {
   }
   public static Result show(Long id) {
     Post post = Post.find.byId(id);
+    
+    /* Iterate through ManyToMany association */
+    Iterator<Tag> iterator = post.tags.iterator();
+    while(iterator.hasNext()){
+    Tag tag = iterator.next();
+    System.out.printf("Tag: %s\n", tag.name);
+    }
     String randomID = UUID.randomUUID().toString();
     return ok(show.render(post, commentForm, randomID));
   }

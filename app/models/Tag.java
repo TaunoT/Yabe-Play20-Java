@@ -15,8 +15,10 @@ public class Tag extends Model implements Comparable<Tag> {
   @Basic(fetch = FetchType.EAGER)
   public String name;
 
-  @ManyToMany(mappedBy = "tags")
+/*
+  @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
   public Set<Post> posts = new TreeSet<Post>();
+*/
 
   public static Model.Finder<Long, Tag> find = new Model.Finder(Long.class, Tag.class);
 

@@ -85,10 +85,13 @@ public class Post extends Model {
   }
     
   public static List<Post> findTaggedWith(String... tags) {
-    String sql = "select distinct p from Post p join p.tags as t where t.name in (:tags) group by p.id, p.author, p.title, p.content, p.postedAt having count(t.id) = :size";
-   com.avaje.ebean.Query<Post> sqlquery = Ebean.createQuery(Post.class, sql);
-    sqlquery.setParameter("tags", tags);
-    sqlquery.setParameter("size", tags.length);
+    //String sql = "select distinct p from Post p join p.tags as t where t.name in (:tags) group by p.id, p.author, p.title, p.content, p.postedAt having count(t.id) = :size";
+    return Post.find.where().in("tags.name", tags).findList();
+    /*
+    RawSql rawsql = RawSqlBuilder.parse(sql).create();
+    com.avaje.ebean.Query<Post> sqlquery = Ebean.find(Post.class);
+    sqlquery.setRawSql(rawsql);
     return sqlquery.findList();
+    */
   }
 }

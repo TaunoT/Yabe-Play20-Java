@@ -16,7 +16,7 @@ users:
 tags:
 
     - &tag1 !!models.Tag
-        name:  Play
+        name:  Play2.0
 
     - &tag2 !!models.Tag
         name:  Architecture
@@ -27,6 +27,11 @@ tags:
     - &tag4 !!models.Tag
         name:  MVC
 
+    - &tag5 !!models.Tag
+        name:  Ebean
+
+    - &tag6 !!models.Tag
+        name:  Javascript
 # Posts
 posts:
 
@@ -56,6 +61,9 @@ posts:
         author: *user1
         content:    >
                     Well, it's just a test.
+        tags:  
+             - *tag4
+             - *tag5
 
     - &post3 !!models.Post
         title:      The MVC application
@@ -68,6 +76,9 @@ posts:
                     This pattern splits the application into separate layers: the Presentation 
                     layer and the Model layer. The Presentation layer is further split into a 
                     View and a Controller layer.
+        tags:  
+             - *tag5
+             - *tag6
 
 
 # Comments
