@@ -80,15 +80,15 @@ public class Post extends Model {
   }
 
   public Post previous() {
-    List<Post> result = Post.find.orderBy("postedAt desc").where().lt("postedAt", postedAt).findList();
-    if(result.size()>0)
-      return result.get(0);
+    Post result = Post.find.where().lt("postedAt", postedAt).orderBy("postedAt desc").setMaxRows(1).findUnique();
+    if(result != null)
+      return result;
     return null;
   }
   public Post next() {
-    List<Post> result = Post.find.orderBy("postedAt asc").where().gt("postedAt", postedAt).findList();
-    if(result.size()>0)
-      return result.get(0);
+    Post result = Post.find.where().gt("postedAt", postedAt).orderBy("postedAt asc").setMaxRows(1).findUnique();
+    if(result != null)
+      return result;
     return null;
   }
   
