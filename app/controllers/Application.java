@@ -24,11 +24,11 @@ public class Application extends Controller {
   static Form<CommentForm> commentForm = form(CommentForm.class);
   
   public static Result index() {
-    Post frontPost = Post.find.orderBy("postedAt").findList().get(0);
-    List<Post> olderPosts = Post.find.orderBy("postedAt").findList().subList(1, 3);
-    return ok(index.render(
-    frontPost, olderPosts
-    ));
+    List<Post> postsList = Post.find.orderBy("postedAt desc").findList();
+    Post frontPost = postsList.remove(0);
+    int toIndex = (postsList.size() > 10) ? 10 : postsList.size() ;
+    List<Post> olderPosts = postsList.subList(0, toIndex);
+    return ok(index.render(frontPost, olderPosts));
   }
   public static Result show(Long id) {
     Post post = Post.find.byId(id);

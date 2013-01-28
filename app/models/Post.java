@@ -85,6 +85,7 @@ public class Post extends Model {
       return result;
     return null;
   }
+  
   public Post next() {
     Post result = Post.find.where().gt("postedAt", postedAt).orderBy("postedAt asc").setMaxRows(1).findUnique();
     if(result != null)
