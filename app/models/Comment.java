@@ -15,32 +15,33 @@ import play.db.ebean.Model;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="comments")
+@Table(name = "comments")
 public class Comment extends Model {
 
   @Id
   public Long id;
   @ManyToOne
-	public User author;
-	public Date postedAt;
+  public User author;
+  public Date postedAt;
 
-	@Lob	
+  @Lob
   @Basic(fetch = FetchType.EAGER)
-	public String content;
+  public String content;
 
-	@ManyToOne
-	public Post post;
+  @ManyToOne
+  public Post post;
 
-  public static Model.Finder<Long, Comment> find = new Model.Finder(Long.class, Comment.class);
-	public Comment(Post post, User author, String content) {
-		this.post = post;
-		this.author = author;
-		this.content = content;
+  public static Model.Finder<Long, Comment> find = new Model.Finder(Long.class,Comment.class);
+
+  public Comment(Post post, User author, String content) {
+    this.post = post;
+    this.author = author;
+    this.content = content;
     this.postedAt = new Date();
-	}
+  }
 
   public static List<Comment> findByPost(Long postId) {
-    return find.where().eq("post.id", postId).findList(); 
+    return find.where().eq("post.id", postId).findList();
   }
 
 }
