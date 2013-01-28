@@ -22,35 +22,36 @@ import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class Application extends Controller {
   static Form<CommentForm> commentForm = form(CommentForm.class);
-  
+
   public static Result index() {
     List<Post> postsList = Post.find.orderBy("postedAt desc").findList();
     Post frontPost = postsList.remove(0);
-    int toIndex = (postsList.size() > 10) ? 10 : postsList.size() ;
+    int toIndex = (postsList.size() > 10) ? 10 : postsList.size();
     List<Post> olderPosts = postsList.subList(0, toIndex);
     return ok(index.render(frontPost, olderPosts));
   }
+
   public static Result show(Long id) {
     Post post = Post.find.byId(id);
-    
+
     /* Iterate through ManyToMany association */
     Iterator<Tag> iterator = post.tags.iterator();
-    while(iterator.hasNext()){
-    Tag tag = iterator.next();
-    System.out.printf("Tag: %s\n", tag.name);
+    while (iterator.hasNext()) {
+      Tag tag = iterator.next();
+      System.out.printf("Tag: %s\n", tag.name);
     }
     String randomID = UUID.randomUUID().toString();
     return ok(show.render(post, commentForm, randomID));
   }
 
   public static Result captcha(String randomID) {
-    try{
+    try {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       ImageCaptchaService service = Captcha.getService();
       BufferedImage image = service.getImageChallengeForID(randomID);
       ImageIO.write(image, "jpg", baos);
       return ok(baos.toByteArray()).as("image/jpeg");
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.printf("Captcha Creation failed\n");
       return notFound();
     }
@@ -60,15 +61,14 @@ public class Application extends Controller {
     Form<CommentForm> filled = commentForm.bindFromRequest();
     Post post = Post.find.byId(postId);
 
-    if(filled.hasErrors()) { 
+    if (filled.hasErrors()) {
       return badRequest(show.render(post, commentForm, randomID));
-    }
-    else {
+    } else {
       CommentForm comment = filled.get();
       post.addComment(comment.fullname, comment.email, comment.content);
       session().clear();
-      flash("success", "Thanks for posting");
-      return show(postId); 
+      flash("success", "Thanks for commenting!");
+      return show(postId);
     }
   }
 
@@ -77,4 +77,3 @@ public class Application extends Controller {
     return ok(listTagged.render(posts, tag));
   }
 }
-
