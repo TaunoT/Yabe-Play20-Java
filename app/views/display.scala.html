@@ -1,31 +1,32 @@
 @(post: models.Post, mode: String ="full")
 
-<div class="post @{if(mode == "teaser") mode else ""}">
+<div class="post @{ if (mode == "teaser") {mode} else ""}">
   <h2 class="post-title">
     <a href="@routes.Application.show(post.id)">@post.title</a>
   </h2>
   <div class="post-metadata">
     <span class="post-author"> by @User.findByEmail(post.author.email).fullname</span>
-    <span class="post-date"> @post.postedAt.format("dd MMM yy") </span>
-    @if( mode != "full" ) {
+    <span class="post-date"> @post.postedAt.format("dd. MMM yy")</span>
+    @if(mode != "full") {
       <span class="post-comments">
-        &nbsp;|&nbsp; 
+        |  
         @{
-          val comments=Comment.findByPost(post.id); 
-          {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} + 
-          {if(comments.size >0) {", " + " latest by " + 
-            User.findByEmail(comments.head.author.email).fullname }else ""}
+          val comments=Comment.findByPost(post.id);
+          {if (comments.size > 0) {comments.size} else "No"} + " comment" +
+          {if (comments.size > 1 || comments.size == 0) {"s"} else {""}} +
+          {if (comments.size > 0) {", latest by " +
+          User.findByEmail(comments.last.author.email).fullname} else {""}}
         }
       </span>
     } else {
-      <span class="post-tags">
-        @if(!post.tags.isEmpty) {
-          -Tagged
+      @if(!post.tags.isEmpty){
+        <span class="post-tags">
+          | Tags:
           @post.tags.map{ tag =>
             <a href="@routes.Application.listTagged(tag.name)">@tag.name</a>         
           }
-        }
-      </span>
+        </span>
+      }
    }   
   </div>
   @if(mode!="teaser"){
@@ -39,7 +40,7 @@
   <div class="comments">
     <h3>
        @{val comments=Comment.findByPost(post.id); 
-       {if(comments.size>0) comments.size else "no"} + " comment" + {if(comments.size>1) {"s"} else ""} 
+         {if (comments.size > 0) {comments.size} else {"No"}} + " comment" + {if (comments.size > 1 || comments.size == 0) {"s"} else {""}} 
        } 
     </h3>
     @{Comment.findByPost(post.id).map{comment =>
@@ -47,7 +48,7 @@
         <div class="comment-metadata">
           <span class="comment-author">by {User.findByEmail(comment.author.email).fullname},</span>
           <span class="comment-date">
-            {comment.postedAt.format("dd MMM yy")}
+            {comment.postedAt.format("dd. MMM yy")}
           </span>
         </div>
         <div class="comment-content">

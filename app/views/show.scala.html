@@ -2,66 +2,68 @@
 @import helper._
 
 @main(post.title){
-    <ul id="pagination">
-      @if(!Option(post previous).isEmpty) {
-        <li id="previous">
-          <a href="@routes.Application.show(post.previous.id)">
-            @post.previous.title
-          </a>
-         <li>
-        }
-      @if(!Option(post next).isEmpty) {
-        <li id="next">
-          <a href="@routes.Application.show(post.next.id)">
-            @post.next.title
-          </a>
-         <li>
-        }
-    </ul>
-    @if(flash.contains("success")) {
-      <p class="success">@flash.get("success")</p>
+  <ul id="pagination">
+    @if(!Option(post previous).isEmpty) {
+      <li id="previous">
+        <a href="@routes.Application.show(post.previous.id)">
+          @post.previous.title
+        </a>
+      </li>
     }
-    
-    @display(post, mode = "full")
-    
-    @form(routes.Application.postComment(post.id, randomID)) {
-      <fieldset>
-        <legend>Post a comment</legend>
-          @inputText(
-            commentForm("fullname"),
-            '_label -> "Full Name:"
-          )
-          @inputText(
-            commentForm("email"),
-            '_label -> "Email:"
-          )
-          @textarea(
-            commentForm("content"),
-            '_label -> "Comment:"
-          )
-          <p>
-            <label for="code">Please type the code below: </label>
-            <img src="@routes.Application.captcha(randomID)" />
-            <br />
-            <input type="text" name="code" id="code" size="18" value="" />
-            <input type="hidden" name="randomID" value="@randomID" />
-          </p>
-          <p>
-            <input type="submit" value="Submit your comment" />
-          </p>
-      </fieldset>
+    @if(!Option(post next).isEmpty) {
+      <li id="next">
+        <a href="@routes.Application.show(post.next.id)">
+          @post.next.title
+        </a>
+      </li>
     }
-    <script type="text/javascript" charset="utf-8">
-      $(function() {
-        $('form').click(function() {
-          $('form').expose({api: true}).load();
-        });
-        
-        if($('form .errors').size()) {
-          alert("Screwd\n");
-          $('form').expose({api: true, loadSpeed: 0}).load();
-          $('form input[type=text]').get(0).focus();
-        }
+  </ul>
+    
+  @if(flash.contains("success")) {
+    <p class="success">@flash.get("success")</p>
+  }
+    
+  @display(post, mode = "full")
+    
+  @form(routes.Application.postComment(post.id, randomID)) {
+    <fieldset>
+      <legend>Post a comment</legend>
+      @inputText(
+        commentForm("fullname"),
+        '_label -> "Full Name:"
+      )
+      @inputText(
+        commentForm("email"),
+        '_label -> "Email:"
+      )
+      @textarea(
+        commentForm("content"),
+        '_label -> "Comment:"
+      )
+      <p>
+        <label for="code">Please type the code below: </label>
+        <img src="@routes.Application.captcha(randomID)" />
+        <br />
+        <input type="text" name="code" id="code" size="18" value="" />
+        <input type="hidden" name="randomID" value="@randomID" />
+      </p>
+      <p>
+        <input type="submit" value="Submit your comment" />
+      </p>
+    </fieldset>
+  }
+  
+  <script type="text/javascript" charset="utf-8">
+    $(function() {
+      $('form').click(function() {
+        $('form').expose({api: true}).load();
       });
-    </script>
+        
+      if($('form .errors').size()) {
+        alert("Screwd\n");
+        $('form').expose({api: true, loadSpeed: 0}).load();
+        $('form input[type=text]').get(0).focus();
+      }
+    });
+  </script>
 }

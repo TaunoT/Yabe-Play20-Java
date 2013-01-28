@@ -1,19 +1,19 @@
 @(posts: List[Post], tag: String)
 @import helper._
 
-@main("Posts tagged with " + tag){
+@main("Posts tagged with: " + tag){
   @if(posts.length > 1) {
-    <h3>There are posts.length posts tagged with + @tag </h3>    
-  }else {
-    @if(posts.length > 0) {
-      <h3> There is 1 post tagged with + @tag</h3>
-    }else {
-      <h3>No post tagged with + @tag</h3>
+    <h3>There are @posts.length posts tagged with: @tag</h3>    
+  } else {
+    @if(posts.length == 1) {
+      <h3>There is 1 post tagged with: @tag</h3>
+    } else {
+      <h3>There are no posts tagged with: @tag</h3>
     }
   }
 
   <div class="older-posts">
-    @posts.map{post =>
+    @posts.map{ post =>
       @display(post, mode = "teaser")
     }
   </div>
