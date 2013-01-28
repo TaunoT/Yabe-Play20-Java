@@ -12,9 +12,11 @@ public class CommentForm {
   public String validate()  {
     ImageCaptchaService service = Captcha.getService ();
 
-    if(!fullname.isEmpty() && !email.isEmpty() && !content.isEmpty() && service.validateResponseForID (randomID, code))
+    if(!fullname.isEmpty() && !email.isEmpty() && !content.isEmpty()
+        && service.validateResponseForID(randomID, code)) {
       return null;
-    else
+    } else {
       return "failed";
+    }
   }
 }
