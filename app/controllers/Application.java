@@ -2,21 +2,23 @@ package controllers;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import play.*;
-import play.mvc.*;
-import play.data.*;
-
-import models.*;
-import views.html.*;
-import java.util.*;
-import javax.persistence.*;
-import com.octo.captcha.service.image.*;
-import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
-import com.octo.captcha.service.image.ImageCaptchaService;
-import javax.imageio.ImageIO;
-import java.io.ByteArrayOutputStream;
-import java.util.Locale;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
+
+import models.Post;
+import models.Tag;
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.index;
+import views.html.listTagged;
+import views.html.show;
+
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class Application extends Controller {
   static Form<CommentForm> commentForm = form(CommentForm.class);
