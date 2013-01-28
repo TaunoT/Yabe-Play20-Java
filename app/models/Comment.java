@@ -20,8 +20,10 @@ public class Comment extends Model {
 
   @Id
   public Long id;
+  
   @ManyToOne
   public User author;
+  
   public Date postedAt;
 
   @Lob
