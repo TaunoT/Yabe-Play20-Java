@@ -5,6 +5,7 @@ import javax.persistence.*;
 import play.db.ebean.*;
 import com.avaje.ebean.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="users")
 public class User extends Model {
