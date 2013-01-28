@@ -1,9 +1,17 @@
 package models;
 
-import java.util.*;
-import javax.persistence.*;
-import play.db.ebean.*;
-import com.avaje.ebean.*;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import play.db.ebean.Model;
+
+import com.avaje.ebean.Ebean;
 
 @SuppressWarnings("serial")
 @Entity
