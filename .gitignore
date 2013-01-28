@@ -7,6 +7,9 @@
 # Ignore Play! working directory #
 db
 eclipse
+project/project
+project/target
+target
 log
 logs
 precompiled
