@@ -111,7 +111,7 @@ public class Post extends Model {
      */
   }
   
-  public static List<Post> findByUser(User user) {
-    return Post.find.where().eq("author", user).orderBy("postedAt desc").findList();
+  public static List<Post> findByUser(String user) {
+    return Post.find.where().eq("author_email", user).orderBy("postedAt desc").findList();
   }
 }
