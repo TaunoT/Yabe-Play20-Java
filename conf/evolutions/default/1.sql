@@ -4,25 +4,25 @@
 # --- !Ups
 
 create table comments (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   author_email              varchar(255),
-  posted_at                 timestamp,
-  content                   clob,
+  posted_at                 datetime,
+  content                   longtext,
   post_id                   bigint,
   constraint pk_comments primary key (id))
 ;
 
 create table posts (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   title                     varchar(255),
-  posted_at                 timestamp,
-  content                   clob,
+  posted_at                 datetime,
+  content                   longtext,
   author_email              varchar(255),
   constraint pk_posts primary key (id))
 ;
 
 create table tags (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255),
   constraint pk_tags primary key (id))
 ;
@@ -31,7 +31,7 @@ create table users (
   email                     varchar(255) not null,
   password                  varchar(255),
   fullname                  varchar(255),
-  is_admin                  boolean,
+  is_admin                  tinyint(1) default 0,
   constraint pk_users primary key (email))
 ;
 
@@ -41,14 +41,6 @@ create table posts_tags (
   tags_id                        bigint not null,
   constraint pk_posts_tags primary key (posts_id, tags_id))
 ;
-create sequence comments_seq;
-
-create sequence posts_seq;
-
-create sequence tags_seq;
-
-create sequence users_seq;
-
 alter table comments add constraint fk_comments_author_1 foreign key (author_email) references users (email) on delete restrict on update restrict;
 create index ix_comments_author_1 on comments (author_email);
 alter table comments add constraint fk_comments_post_2 foreign key (post_id) references posts (id) on delete restrict on update restrict;
@@ -64,25 +56,17 @@ alter table posts_tags add constraint fk_posts_tags_tags_02 foreign key (tags_id
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists comments;
+drop table comments;
 
-drop table if exists posts;
+drop table posts;
 
-drop table if exists posts_tags;
+drop table posts_tags;
 
-drop table if exists tags;
+drop table tags;
 
-drop table if exists users;
+drop table users;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists comments_seq;
-
-drop sequence if exists posts_seq;
-
-drop sequence if exists tags_seq;
-
-drop sequence if exists users_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
