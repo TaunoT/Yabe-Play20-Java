@@ -1,0 +1,20 @@
+@(posts: List[Post], user: String)
+@import helper._
+
+@main("Posts by user: " + user){
+  @if(posts.length > 1) {
+    <h3>There are @posts.length posts posted by: @user</h3>    
+  } else {
+    @if(posts.length == 1) {
+      <h3>There is 1 post posted by: @user</h3>
+    } else {
+      <h3>There are no posts posted by: @user</h3>
+    }
+  }
+
+  <div class="older-posts">
+    @posts.map{ post =>
+      @display(post, mode = "teaser")
+    }
+  </div>
+}
