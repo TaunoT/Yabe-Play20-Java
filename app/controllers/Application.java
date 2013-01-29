@@ -16,6 +16,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 import views.html.listTagged;
+import views.html.listByUser;
 import views.html.show;
 
 import com.octo.captcha.service.image.ImageCaptchaService;
@@ -75,5 +76,10 @@ public class Application extends Controller {
   public static Result listTagged(String tag) {
     List<Post> posts = Post.findTaggedWith(tag);
     return ok(listTagged.render(posts, tag));
+  }
+  
+  public static Result listByUser(String user) {
+    List<Post> posts = Post.findByUser(user);
+    return ok(listByUser.render(posts, user));
   }
 }
