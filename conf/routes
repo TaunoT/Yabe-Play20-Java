@@ -3,10 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /posts/$id<[0-9]+>                           controllers.Application.show(id : Long)
-GET     /posts/:tag                           controllers.Application.listTagged(tag : String)
-POST    /posts/:id/comments                          controllers.Application.postComment(id: Long, randomID: String)
-GET     /captcha                                      controllers.Application.captcha(id: String)
+GET     /posts/$id<[0-9]+>          controllers.Application.show(id : Long)
+GET     /posts/:tag                 controllers.Application.listTagged(tag : String)
+POST    /posts/:id/comments         controllers.Application.postComment(id: Long, randomID: String)
+GET     /posts/user/:user           controllers.Application.listByUser(user: String)
+GET     /captcha                    controllers.Application.captcha(id: String)
 GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
