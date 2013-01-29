@@ -110,4 +110,8 @@ public class Post extends Model {
      * sqlquery.setRawSql(rawsql); return sqlquery.findList();
      */
   }
+  
+  public static List<Post> findByUser(User user) {
+    return Post.find.where().eq("author", user).orderBy("postedAt desc").findList();
+  }
 }
